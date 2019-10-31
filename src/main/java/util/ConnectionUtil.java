@@ -1,4 +1,4 @@
-package resources.util;
+package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +13,12 @@ public class ConnectionUtil {
 			
 			Connection conn = DriverManager.getConnection(url, "admin","password");
 			System.out.print("connection established succssfully");
-		}catch(SQLException e) {
+			
+			return conn;
+			}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.print("connection failure");
+			
 			return null;
 		}
 	}

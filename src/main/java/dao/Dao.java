@@ -1,4 +1,4 @@
-package resources.dao;
+package dao;
 
 
 //after creating user class for 
@@ -6,6 +6,6 @@ package resources.dao;
 public class Dao {
 
 	
-	public 
+	//public 
 	
 }
