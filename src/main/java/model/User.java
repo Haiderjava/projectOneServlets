@@ -9,9 +9,8 @@ public class User {
 	private String first_name;
 	private String last_name;
 	private String user_email;
-	private String user_role_id;
-	
-	
+	private int user_role_id;
+
 	
 	public int getUser_id() {
 		return user_id;
@@ -49,24 +48,17 @@ public class User {
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-	public String getUser_role_id() {
+	public int getUser_role_id() {
 		return user_role_id;
 	}
-	public void setUser_role_id(String user_role_id) {
+	public void setUser_role_id(int user_role_id) {
 		this.user_role_id = user_role_id;
 	}
 
-	public User(int user_id, String user_name, String user_pass, String first_name, String last_name, String user_email,
-			String user_role_id) {
-		super();
-		this.user_id = user_id;
-		this.user_name = user_name;
-		this.user_pass = user_pass;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.user_email = user_email;
-		this.user_role_id = user_role_id;
-	}
+
+	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,7 +69,7 @@ public class User {
 		result = prime * result + user_id;
 		result = prime * result + ((user_name == null) ? 0 : user_name.hashCode());
 		result = prime * result + ((user_pass == null) ? 0 : user_pass.hashCode());
-		result = prime * result + ((user_role_id == null) ? 0 : user_role_id.hashCode());
+		result = prime * result + user_role_id;
 		return result;
 	}
 	@Override
@@ -116,20 +108,28 @@ public class User {
 				return false;
 		} else if (!user_pass.equals(other.user_pass))
 			return false;
-		if (user_role_id == null) {
-			if (other.user_role_id != null)
-				return false;
-		} else if (!user_role_id.equals(other.user_role_id))
+		if (user_role_id != other.user_role_id)
 			return false;
 		return true;
 	}
 	
+	public User(int user_id, String user_name, String user_pass, String first_name, String last_name, String user_email,
+			int user_role_id) {
+		super();
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.user_pass = user_pass;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.user_email = user_email;
+		this.user_role_id = user_role_id;
+	}
 	
-	
-	
-	
-	
+	public User() {
+		super();
+	}
+
 }
-
-
-
+	
+	
+	

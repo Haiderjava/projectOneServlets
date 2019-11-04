@@ -9,13 +9,13 @@
   	<servlet-name>UserServlet</servlet-name>
   	<display-name>UserServlet</display-name>
   	<description></description>
-  	<servlet-class>resources.servlets.UserServlet</servlet-class>
+  	<servlet-class>servlets.UserServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>TicketServlet</servlet-name>
   	<display-name>TicketServlet</display-name>
   	<description></description>
-  	<servlet-class>resources.servlets.TicketServlet</servlet-class>
+  	<servlet-class>servlets.TicketServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -26,6 +26,19 @@
   	<servlet-name>TicketServlet</servlet-name>
   	<url-pattern>/TicketServlet</url-pattern>
   </servlet-mapping>
+  
+  <!--  
+  	<servlet>
+		<servlet-name>TicketServletTest</servlet-name>
+		<servlet-class>resources.servlettest.TicketServletTest</servlet-class>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>TicketServletTest</servlet-name>
+		<url-pattern>/TicketServletTest</url-pattern>
+	</servlet-mapping>
+  -->
+
 
   
 </web-app>
