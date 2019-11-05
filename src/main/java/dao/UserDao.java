@@ -86,8 +86,8 @@ private User getUser(ResultSet rs)throws SQLException{
  	}
  
  
-	public Credentials userLogin(redentials credentials) {
-		// complete this method to return a list type 
+	public Credentials userLogin(Credentials credentials) {
+		
 		try(Connection conn = ConnectionUtil.getConnection() ) {
 			
 			String sql = "select * from  users";
@@ -95,9 +95,20 @@ private User getUser(ResultSet rs)throws SQLException{
 			ResultSet rs = ps.executeQuery();
 							
 			while (rs.next()) {
-				String userName = rs.getString("user_name");
-				String password = rs.getString("user_pass");
+				String dataBaseUserName = rs.getString("user_name");
+				String dataBasePass = rs.getString("user_pass");
+				
+				String inputUserName = credentials.getUserName();
+				int inputPassword = credentials.getPassword();
+				
+				if(dataBaseUserName.equals(inputUserName) & dataBasePass.equals(Integer.toString(inputPassword))) {
+					
+					System.out.println("login successful");
+					return credentials;
+				}break;
 			}
+			credentials.setUserName("");
+			credentials.setPassword(999);
 			return credentials;
 			
 		}catch(SQLException e) {
@@ -106,8 +117,29 @@ private User getUser(ResultSet rs)throws SQLException{
 						
 		}
 		
-} 	
- 
- 
-
+	} 	
+	
+	/*
+	public void userLogin() {
+		
+		try(Connection conn = ConnectionUtil.getConnection() ) {
+			
+			String sql = "select * from  users";
+			PreparedStatement  ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+							
+			while (rs.next()) {
+				String dataBaseUserName = rs.getString("user_name");
+				String dataBasePass = rs.getString("user_pass");
+				System.out.println("login successful "+dataBaseUserName);
+				System.out.println("login successful "+dataBasePass);
+			}
+		
+		}catch(SQLException e) {
+			e.printStackTrace();
+				
+		}
+		
+	} 	
+  */
  }

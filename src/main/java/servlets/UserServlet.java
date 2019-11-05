@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dao.UserDao;
 import model.Credentials;
 import model.Ticket;
 import model.User;
@@ -30,8 +31,8 @@ public class UserServlet extends HttpServlet {
 		
 	}
 	// here we are calling the useService 
-		UserService userService = new UserService();
-				
+	UserService userService = new UserService();
+	
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException , ServletException{
 			
 			System.out.println("Coming from HTML");
@@ -40,26 +41,27 @@ public class UserServlet extends HttpServlet {
 			ObjectMapper om = new ObjectMapper();
 				
 			Credentials cred = om.readValue(request.getReader(), Credentials.class);
-				int pass = cred.getPassword();
-				String name = cred.getUserName();
+				//int pass = cred.getPassword();
+				//String name = cred.getUserName();
 				
 			
 			//om.writeValue(response.getWriter(), name);
 			//om.writeValue(response.getWriter(), pass);
 			
-			cred = userService.userLoginService(cred);
+			//om.writeValue(response.getWriter(), cred);
 			
-			om.writeValue(response.getWriter(), cred);
+			Credentials cred1 = userService.userLoginService(cred);
 			
-			System.out.println("" + name);
-			System.out.println("" + pass);
+			response.setStatus(201);
+			
+			om.writeValue(response.getWriter(), cred1.getPassword());
+				
+			
+			//System.out.println("" + name);
+		//	System.out.println("" + pass);
 			
 			
-		  //  System.out.println("Username: " + request.getAttribute("amount"));
-			//response.getWriter().write("this is the amount  " + amount);
-			
-			
-			
+	
 		}	
 			
 		protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException , ServletException{

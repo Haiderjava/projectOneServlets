@@ -2,21 +2,33 @@ package service;
 
 import dao.UserDao;
 import model.Credentials;
-import model.User;
+
 
 public class UserService {
 	
 	UserDao userDao = new UserDao();
-	
-	public Credentials userLoginService(Credentials credentials) {
+	public Credentials userLoginService(Credentials cred) {
 		
+		//Credentials credentials = cred;
 		// do some validations
-		Credentials login = UserDao.userLogin(credentials);
+		Credentials login = userDao.userLogin(cred);
 		return login;
 		
 		
 		
 	}
 	
+	
+	public Credentials inserNewTicket(Credentials cred) {
+		
+		//Credentials credentials = cred;
+		// do some validations
+		Credentials login = userDao.userLogin(cred);
+		return login;
+	
+	
 
 }
+	
+}
+
