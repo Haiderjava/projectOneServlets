@@ -3,16 +3,17 @@ package model;
 public class Credentials {
 
 	private String userName;
-	private int password;
+	private String password;
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + password;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -22,7 +23,10 @@ public class Credentials {
 		if (getClass() != obj.getClass())
 			return false;
 		Credentials other = (Credentials) obj;
-		if (password != other.password)
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		if (userName == null) {
 			if (other.userName != null)
@@ -31,31 +35,23 @@ public class Credentials {
 			return false;
 		return true;
 	}
-
-	
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Credentials(String userName, int password) {
-		super();
-		this.userName = userName;
-		this.password = password;
+	@Override
+	public String toString() {
+		return "Credentials [userName=" + userName + ", password=" + password + "]";
 	}
-
-	public Credentials() {
-		super();
 	
-	}
-
 	
 	
 }

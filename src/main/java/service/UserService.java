@@ -2,33 +2,31 @@ package service;
 
 import dao.UserDao;
 import model.Credentials;
-
+import model.User;
 
 public class UserService {
-	
+
 	UserDao userDao = new UserDao();
-	public Credentials userLoginService(Credentials cred) {
+
+	public User userLoginService(Credentials cred) {
+
+		User login = userDao.getUser(cred.getUserName());
 		
-		//Credentials credentials = cred;
-		// do some validations
-		Credentials login = userDao.userLogin(cred);
-		return login;
-		
-		
-		
+		if(login == null) {
+			return null;
+		}
+
+		String dataBaseUserName = login.getUser_name();
+		String dataBasePass = login.getUser_pass();
+
+		String inputUserName = cred.getUserName();
+		String inputPassword = cred.getPassword();
+
+		if (dataBaseUserName.equals(inputUserName) & dataBasePass.equals(inputPassword)) {
+
+			System.out.println("login successful");
+			return login;
+		}
+		return null;
 	}
-	
-	
-	public Credentials inserNewTicket(Credentials cred) {
-		
-		//Credentials credentials = cred;
-		// do some validations
-		Credentials login = userDao.userLogin(cred);
-		return login;
-	
-	
-
 }
-	
-}
-

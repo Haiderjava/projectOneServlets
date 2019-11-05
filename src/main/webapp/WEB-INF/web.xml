@@ -27,18 +27,4 @@
   	<url-pattern>/TicketServlet</url-pattern>
   </servlet-mapping>
   
-  <!--  
-  	<servlet>
-		<servlet-name>TicketServletTest</servlet-name>
-		<servlet-class>resources.servlettest.TicketServletTest</servlet-class>
-	</servlet>
-		
-	<servlet-mapping>
-		<servlet-name>TicketServletTest</servlet-name>
-		<url-pattern>/TicketServletTest</url-pattern>
-	</servlet-mapping>
-  -->
-
-
-  
 </web-app>
