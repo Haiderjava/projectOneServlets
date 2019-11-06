@@ -25,16 +25,21 @@ public class UserServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	// to take care of CORS
+	@Override
+	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	       response.setHeader("Access-Control-Allow-Origin", "*");
+	       response.setHeader("Access-Control-Allow-Headers", "*");
+	       super.service(request, response);
+	   }
 
 	// here we are calling the useService
-	UserService userService = new UserService();
+		UserService userService = new UserService();
 
-	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.service(req, resp);
-		System.out.println("user servlet request recieved");
-	}
+
+
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -52,22 +57,6 @@ public class UserServlet extends HttpServlet {
 
 	}
 
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
 
-		// Jackson utility class for working with JSON
-
-		// ObjectMapper om = new ObjectMapper();
-
-		// Ticket ticket = new Ticket(0, 0, null, null, null, 0, 0, 0, 0);
-
-		// Ticket ticket = om.readValue(request.getReader(), Ticket.class);
-
-		// ticket = ticketService.insert(ticket);
-
-		// response.setStatus(201);
-		// om.writeValue(response.getWriter(),ticket);
-
-	}
 
 }

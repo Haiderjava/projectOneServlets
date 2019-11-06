@@ -8,10 +8,10 @@ public class ConnectionUtil {
 
 	public static Connection getConnection() {
 		
-		String url = "jdbc:postgresql://localhost:5432/ERS";
+		String url = "jdbc:postgresql://localhost:5432/postgres";
 		try {
 			
-			Connection conn = DriverManager.getConnection(url, "postgres","postgres");
+			Connection conn = DriverManager.getConnection(url, "admin","password");
 			//System.out.print("connection established succssfully");
 			
 			return conn;

@@ -17,6 +17,18 @@
   	<description></description>
   	<servlet-class>servlets.TicketServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewTicketsServlet</servlet-name>
+  	<display-name>ViewTicketsServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.ViewTicketsServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ManagerServlet</servlet-name>
+  	<display-name>ManagerServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.ManagerServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
   	<servlet-name>UserServlet</servlet-name>
@@ -25,6 +37,14 @@
   <servlet-mapping>
   	<servlet-name>TicketServlet</servlet-name>
   	<url-pattern>/TicketServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewTicketsServlet</servlet-name>
+  	<url-pattern>/ViewTicketsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ManagerServlet</servlet-name>
+  	<url-pattern>/ManagerServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

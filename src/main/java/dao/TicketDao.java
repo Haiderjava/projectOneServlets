@@ -37,29 +37,25 @@ public class TicketDao {
 
 	}
 
-	public Ticket checkTicket(Ticket ticket) {
+	public List<Ticket> checkTicket(Ticket ticket) {
 		// complete this method to return a list type
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "select * from  reimbursement";
+			String sql = "select * from reimbursement where author = ?;";
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, ticket.getAuthor());
 			ResultSet rs = ps.executeQuery();
-
+			List<Ticket> tickets = new ArrayList();
 			while (rs.next()) {
-				// int amount = rs.getInt("amount");
-				if (rs.getInt("amount") == ticket.getAmount()) {
-
-					System.out.println("connection established successfully");
-					return ticket;
-				} else {
-					return ticket;
-				}
+				Ticket newTicket = getTicket(rs);
+				tickets.add(newTicket);
+				
 			}
-			return ticket;
+			return tickets;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return ticket;
+			return null;
 
 		}
 
@@ -113,52 +109,55 @@ public class TicketDao {
 	// the following ticket should brought from the servlet coming from ObjectMapper
 	// allready deserialized from the om
 
-	public void newTicket(Ticket ticket) {
+	public Ticket newTicket(Ticket ticket) {
 
-		String insertQuerey = "insert into reimbursement(r_id,amount,description,author,r_status_id,r_type_id) \r\n"
-				+ "			values(?,?,?,?,?,?);";
+		String insertQuerey = "insert into reimbursement(amount,description,author,r_type_id) values(?,?,?,?) returning *;";
 
-		// her geting the userID
-		// int userInput = UserInputId;
 		try (Connection conn = ConnectionUtil.getConnection()) {
-
 			PreparedStatement ps = conn.prepareStatement(insertQuerey);
-
-			ps.setInt(1, 1003);
-			ps.setInt(2, 60);
-			ps.setString(3, "Travel bill");
-			ps.setInt(4, 2);
-			ps.setInt(5, 0);
-			ps.setInt(6, 40);
-			ps.executeQuery();
-
-			/*
-			 * ps.setInt(1, ticket.getId()); ps.setInt(2, ticket.getAmount());
-			 * ps.setString(3,ticket.getDesc()); ps.setInt(4,ticket.getAuthor() );
-			 * ps.setInt(5,ticket.getR_status_id()); ps.setInt(6,ticket.getR_type_id());
-			 * ps.executeQuery();
-			 * 
-			 */
+			
+			ps.setInt(1, ticket.getAmount());
+			ps.setString(2, ticket.getDesc());
+			ps.setInt(3, ticket.getAuthor());
+			ps.setInt(4, ticket.getR_type_id());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Ticket newTicket = getTicket(rs);
+				return newTicket;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-
+			return null;
 		}
+		return null;
 
 	}
 
-	// to create a ticket
-	// amount and discription and type
-	// fro time, we have to put the currnet time stamp using java.
-	// public Ticket
-	// updating the time stamp :
-	/*
-	 * 
-	 * 1- inserting, it will be updated autamtically.
-	 * 
-	 * updating, sent thogh the querey , not using the ?.
-	 * 
-	 * 
-	 */
+		
+	public Ticket approveDenyTicket(Ticket ticket) {
 
+		String insertQuerey = "update reimbursement set resolved = current_timestamp,resolver= ?, r_status_id = ?  where r_id = ? returning *;";
+
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(insertQuerey);
+			
+			ps.setInt(1, ticket.getResolver());
+			ps.setInt(2, ticket.getR_status_id());
+			ps.setInt(3, ticket.getId());
+			
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Ticket newTicket = getTicket(rs);
+				return newTicket;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+
+	}
+	
 }
