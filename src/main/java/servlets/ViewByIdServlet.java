@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,10 +13,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Ticket;
 import service.TicketService;
 
-public class TicketServlet extends HttpServlet {
+/**
+ * Servlet implementation class ViewByIdServlet
+ */
+public class ViewByIdServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	public void init() throws ServletException {
-
 		try {
 
 			Class.forName("org.postgresql.Driver");
@@ -32,20 +37,22 @@ public class TicketServlet extends HttpServlet {
 		super.service(request, response);
 	}
 
-	TicketService ticketService = new TicketService();
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		TicketService ticketService = new TicketService();
 
-		System.out.println("Coming from HTML");
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		System.out.println("Coming from View Tickets Servlet: " + id);
 
 		ObjectMapper om = new ObjectMapper();
 
-		Ticket ticket = om.readValue(request.getReader(), Ticket.class);
+		Ticket userticket = ticketService.viewTicketById(id);
 
-		Ticket userticket = ticketService.insertNewTicket(ticket);
+		response.setStatus(201);
+
 		om.writeValue(response.getWriter(), userticket);
-
 	}
 
 }

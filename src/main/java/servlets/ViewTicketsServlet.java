@@ -20,64 +20,40 @@ import service.TicketService;
  */
 public class ViewTicketsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	
-public void init() throws ServletException{
-		
-		
+
+	public void init() throws ServletException {
 		try {
-			
 			Class.forName("org.postgresql.Driver");
-			
-		}catch (ClassNotFoundException e) {
+
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-	}
-	
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ViewTicketsServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-    
-    
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "*");
+		super.service(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		TicketService ticketService = new TicketService();
 
-		System.out.println("Coming from View Tickets Servlet");
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		System.out.println("View Tickets Servlet: " + id);
 
 		ObjectMapper om = new ObjectMapper();
-		
-		Ticket ticket = om.readValue(request.getReader(), Ticket.class);
 
-	
-		 List<Ticket> userticket = ticketService.viewAllTickets(ticket);		
-				
+		List<Ticket> userticket = ticketService.viewTicketsByAuthor(id);
+
 		response.setStatus(201);
 
 		om.writeValue(response.getWriter(), userticket);
-		
-		
-		//doGet(request, response);
 	}
 
 }

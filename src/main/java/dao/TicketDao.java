@@ -15,16 +15,17 @@ import util.ConnectionUtil;
 public class TicketDao {
 
 	// This will return all the data of the users.
-	public List<Ticket> getTicket() {
+	public List<Ticket> getTickets() {
 		// complete this method to return a list type
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "select * from  reimbursement";
+			String sql = "select * from reimbursement order by r_status_id asc, r_id";
+			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			List<Ticket> tickets = new ArrayList();
+			List<Ticket> tickets = new ArrayList<>();
 			while (rs.next()) {
-				Ticket ticket = getTicket(rs);
+				Ticket ticket = extractTicket(rs);
 				tickets.add(ticket);
 			}
 			return tickets;
@@ -37,19 +38,18 @@ public class TicketDao {
 
 	}
 
-	public List<Ticket> checkTicket(Ticket ticket) {
+	public List<Ticket> getTicketsByAuthor(int id) {
 		// complete this method to return a list type
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
 			String sql = "select * from reimbursement where author = ?;";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, ticket.getAuthor());
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			List<Ticket> tickets = new ArrayList();
+			List<Ticket> tickets = new ArrayList<>();
 			while (rs.next()) {
-				Ticket newTicket = getTicket(rs);
+				Ticket newTicket = extractTicket(rs);
 				tickets.add(newTicket);
-				
 			}
 			return tickets;
 
@@ -60,8 +60,28 @@ public class TicketDao {
 		}
 
 	}
+	
+	public Ticket viewTicket(int id) {
 
-	private Ticket getTicket(ResultSet rs) throws SQLException {
+		try (Connection conn = ConnectionUtil.getConnection()) {
+
+			String sql = "select * from reimbursement where r_id = ?;";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return extractTicket(rs);
+			}
+			return null;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	private Ticket extractTicket(ResultSet rs) throws SQLException {
 
 		int id = rs.getInt("r_id");
 		int amount = rs.getInt("amount");
@@ -79,36 +99,6 @@ public class TicketDao {
 
 	}
 
-	// this will take the user input as UserID as a parameter and return the request
-	// ticket info
-	public List<Ticket> viewStatus(/* int UserInputId */) {
-
-		String viewStatusQuerey = "select * from reimbursement where reimbursement.author = ?;";
-		// int userInput = UserInputId;
-		try (Connection conn = ConnectionUtil.getConnection()) {
-
-			PreparedStatement ps = conn.prepareStatement(viewStatusQuerey);
-			// int userInput = should be instead of ?, in this example number 2
-			ps.setInt(1, 2);
-			ResultSet rs = ps.executeQuery();
-			List<Ticket> tickets = new ArrayList();
-			while (rs.next()) {
-				Ticket ticket = getTicket(rs);
-				tickets.add(ticket);
-			}
-			return tickets;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-
-		}
-
-	}
-
-	// the following ticket should brought from the servlet coming from ObjectMapper
-	// allready deserialized from the om
-
 	public Ticket newTicket(Ticket ticket) {
 
 		String insertQuerey = "insert into reimbursement(amount,description,author,r_type_id) values(?,?,?,?) returning *;";
@@ -122,7 +112,7 @@ public class TicketDao {
 			ps.setInt(4, ticket.getR_type_id());
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Ticket newTicket = getTicket(rs);
+				Ticket newTicket = extractTicket(rs);
 				return newTicket;
 			}
 
@@ -131,7 +121,6 @@ public class TicketDao {
 			return null;
 		}
 		return null;
-
 	}
 
 		
@@ -148,7 +137,7 @@ public class TicketDao {
 			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Ticket newTicket = getTicket(rs);
+				Ticket newTicket = extractTicket(rs);
 				return newTicket;
 			}
 
@@ -157,7 +146,6 @@ public class TicketDao {
 			return null;
 		}
 		return null;
-
 	}
 	
 }

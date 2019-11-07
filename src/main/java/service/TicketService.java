@@ -16,34 +16,36 @@ public class TicketService {
 	TicketDao ticketDao = new TicketDao();
 	
 	public Ticket insertNewTicket(Ticket ticket) {
-		// verifying the amount is not 0, or less
-		// after that we can insert new ticket to the reimbursemnet table.
-		if(ticket.getAmount()==0) {
-			
-			System.out.println("Please Enter Amount");
-		}
-		// we have creating inserNewTicket method in TicketDao
 		Ticket insertTicket = ticketDao.newTicket(ticket);
 		System.out.println("New Ticket inserted  successfully");
 		return insertTicket;
 		
 	}
 	
-	public  List<Ticket> viewAllTickets(Ticket ticket) {
-		 List<Ticket> viewTicket = ticketDao.checkTicket(ticket);
+	public  List<Ticket> viewTicketsByAuthor(int id) {
+		 List<Ticket> viewTicket = ticketDao.getTicketsByAuthor(id);
 		System.out.println("View all the tickets works");
 		return viewTicket;
-		
+	}
+	
+	public  Ticket viewTicketById(int id) {
+		 Ticket viewTicket = ticketDao.viewTicket(id);
+		System.out.println("View all the tickets works");
+		return viewTicket;
 	}
 	
 	
 	public Ticket approveDeny(Ticket ticket) {
-	
-		// we have creating inserNewTicket method in TicketDao
 		Ticket approveDenyTick = ticketDao.approveDenyTicket(ticket);
 		System.out.println("Ticket approved  successfully");
 		return approveDenyTick;
 		
+	}
+	
+	public  List<Ticket> viewAllTickets() {
+		 List<Ticket> viewTicket = ticketDao.getTickets();
+		System.out.println("View all the tickets works");
+		return viewTicket;
 	}
 	
 	

@@ -29,6 +29,18 @@
   	<description></description>
   	<servlet-class>servlets.ManagerServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewByIdServlet</servlet-name>
+  	<display-name>ViewByIdServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.ViewByIdServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewAllTicketsServlet</servlet-name>
+  	<display-name>ViewAllTicketsServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlets.ViewAllTicketsServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
   	<servlet-name>UserServlet</servlet-name>
@@ -45,6 +57,14 @@
   <servlet-mapping>
   	<servlet-name>ManagerServlet</servlet-name>
   	<url-pattern>/ManagerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewByIdServlet</servlet-name>
+  	<url-pattern>/ViewByIdServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllTicketsServlet</servlet-name>
+  	<url-pattern>/ViewAllTicketsServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
