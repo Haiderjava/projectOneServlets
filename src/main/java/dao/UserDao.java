@@ -23,7 +23,7 @@ public class UserDao {
 			String sql = "select * from  users";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			List<User> users = new ArrayList();
+			List<User> users = new ArrayList<>();
 			while (rs.next()) {
 				User user = extractUser(rs);
 				users.add(user);
@@ -44,8 +44,9 @@ public class UserDao {
 		String LastName = rs.getString("last_name");
 		String email = rs.getString("user_email");
 		int userRole = rs.getInt("user_role_id");
+		String signature = rs.getString("signature");
 
-		User user = new User(id, userName, password, firstMame, LastName, email, userRole);
+		User user = new User(id, userName, password, firstMame, LastName, email, userRole, signature);
 		return user;
 
 	}

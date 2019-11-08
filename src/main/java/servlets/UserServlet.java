@@ -38,8 +38,6 @@ public class UserServlet extends HttpServlet {
 	// here we are calling the useService
 		UserService userService = new UserService();
 
-
-
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -51,12 +49,16 @@ public class UserServlet extends HttpServlet {
 		Credentials cred = om.readValue(request.getReader(), Credentials.class);
 
 		User user = userService.userLoginService(cred);
+		
 		response.setStatus(201);
 
 		om.writeValue(response.getWriter(), user);
 
 	}
-
-
-
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
+	}
 }

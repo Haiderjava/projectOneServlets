@@ -10,7 +10,7 @@ public class User {
 	private String last_name;
 	private String user_email;
 	private int user_role_id;
-
+	private String signature;
 	
 	public int getUser_id() {
 		return user_id;
@@ -54,17 +54,19 @@ public class User {
 	public void setUser_role_id(int user_role_id) {
 		this.user_role_id = user_role_id;
 	}
-
-
-	
-	
-	
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((first_name == null) ? 0 : first_name.hashCode());
 		result = prime * result + ((last_name == null) ? 0 : last_name.hashCode());
+		result = prime * result + ((signature == null) ? 0 : signature.hashCode());
 		result = prime * result + ((user_email == null) ? 0 : user_email.hashCode());
 		result = prime * result + user_id;
 		result = prime * result + ((user_name == null) ? 0 : user_name.hashCode());
@@ -91,6 +93,11 @@ public class User {
 				return false;
 		} else if (!last_name.equals(other.last_name))
 			return false;
+		if (signature == null) {
+			if (other.signature != null)
+				return false;
+		} else if (!signature.equals(other.signature))
+			return false;
 		if (user_email == null) {
 			if (other.user_email != null)
 				return false;
@@ -112,9 +119,14 @@ public class User {
 			return false;
 		return true;
 	}
-	
+	@Override
+	public String toString() {
+		return "User [user_id=" + user_id + ", user_name=" + user_name + ", user_pass=" + user_pass + ", first_name="
+				+ first_name + ", last_name=" + last_name + ", user_email=" + user_email + ", user_role_id="
+				+ user_role_id + ", signature=" + signature + "]";
+	}
 	public User(int user_id, String user_name, String user_pass, String first_name, String last_name, String user_email,
-			int user_role_id) {
+			int user_role_id, String signature) {
 		super();
 		this.user_id = user_id;
 		this.user_name = user_name;
@@ -123,11 +135,14 @@ public class User {
 		this.last_name = last_name;
 		this.user_email = user_email;
 		this.user_role_id = user_role_id;
+		this.signature = signature;
 	}
-	
 	public User() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }
 	

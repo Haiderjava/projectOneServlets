@@ -5,6 +5,19 @@ public class Credentials {
 	private String username;
 	private String password;
 	
+	
+	
+	public Credentials() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Credentials(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
